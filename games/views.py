@@ -1,5 +1,14 @@
 from django.shortcuts import render
 
 # Create your views here.
-def games(request):
-    return render(request, 'games/games.html')
+def create_game(request):
+    return
+
+def game_detail(request):
+    return
+
+def close_game(request):
+    return
+
+def check_winner(request):
+    return 

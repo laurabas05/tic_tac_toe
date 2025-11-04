@@ -20,6 +20,7 @@ from tic_tac_toe import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("__reload__/", include("django_browser_reload.urls")),
     path('', views.homepage),
     path('games/', include('games.urls'))
 ]
