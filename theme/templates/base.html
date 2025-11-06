@@ -10,17 +10,17 @@
     {% load static %}
 </head>
 
-<body class="">
+<body style="background-image: url('{% static "images/background.png" %}');" class="min-h-screen flex flex-col bg-gray-900 font-[Arial]">
     <header>
 
     </header>
 
-    <main>
+    <main class="grow">
         {% block content %}
         {% endblock %}
     </main>
 
-    <footer>
+    <footer class="bg-gray-950 text-center text-white py-7">
         Made by ♥Laura
     </footer>
 </body>

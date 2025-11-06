@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+<div class="bg-gray-800 text-white text-center mx-auto my-[60px] max-w-[50%] py-[100px] px-[20px] rounded-[10px] shadow-md">
+    <h1 class="text-[50px] font-semibold">Welcome to Tic-Tac-Toe!</h1>
+    <div class="flex flex-col items-center mt-[20px] gap-[20px]">
+        <a class="bg-gray-950 rounded-sm text-[20px] py-[10px] px-[80px]" href="{% url 'users:login' %}">Log in</a>
+        <a class="bg-gray-950 rounded-sm text-[20px] py-[10px] px-[80px]" href="{% url 'users:register' %}">Sign up</a>
+    </div>
+</div>
+{% endblock %}
