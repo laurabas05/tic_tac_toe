@@ -8,7 +8,7 @@ def register_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('homepage')
+            return redirect('games:list')
     else:
         form = CustomUserCreationForm()
     return render(request, 'users/register.html', {'form': form})
@@ -21,7 +21,7 @@ def login_view(request):
             if 'next' in request.POST:
                 return redirect(request.POST.get('next'))
             else:
-                return redirect('homepage')
+                return redirect('games:list')
     else:
         form = CustomAuthenticationForm()
     return render(request, "users/login.html", { "form": form })

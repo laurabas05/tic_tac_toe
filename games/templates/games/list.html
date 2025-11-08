@@ -1,15 +1,41 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}
-Home
+List of games
 {% endblock %}
 
 {% block content %}
-<div class="bg-gray-800 text-white text-center mx-auto my-[60px] max-w-[50%] py-[100px] px-[20px] rounded-[10px] shadow-md">
-    <h1 class="text-[50px] font-semibold">Welcome to Tic-Tac-Toe!</h1>
-    <div class="flex flex-col items-center mt-[20px] gap-[20px]">
-        <a class="bg-gray-950 rounded-sm text-[20px] py-[10px] px-[80px]" href="{% url 'users:login' %}">Log in</a>
-        <a class="bg-gray-950 rounded-sm text-[20px] py-[10px] px-[80px]" href="{% url 'users:register' %}">Sign up</a>
+<section class="mx-[40px] mt-[30px] text-center text-white">
+    <h1 class="text-[40px] font-semibold bg-gray-950 text-center py-[10px] rounded-[10px] mb-[20px]">List of games</h1>
+    <a class="bg-gray-950 rounded-sm text-[20px] py-[10px] px-[40px]" href="{% url 'games:create' %}">➕ New
+        game</a>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[40px] mt-[40px] mb-[40px]">
+        {% for game in games %}
+        <div
+            class="flex flex-col text-left bg-gray-800 text-center py-[10px] px-[20px] rounded-[10px] shadow-md">
+            <p class="text-[25px] font-semibold">{{ game.room_name }}</p>
+            <p class="text-[18px] text-gray-300">Creator: {{ game.owner.username }}</p>
+            <p class="text-[18px] text-gray-300">State: {{ game.state }}</p>
+
+            <form action="{% url 'games:detail' %}" method="post" class="mt-[15px]">
+                {% csrf_token %}
+                <input type="hidden" name="name" value="{{ game.id }}">
+                <button type="submit" class="bg-gray-950 rounded-sm text-[20px] py-[10px] px-[20px] w-full cursor-pointer">
+                    {% if request.user == game.owner %}Play{% else %}View{% endif %}
+                </button>
+            </form>
+
+            {% if request.user == game.owner and game.state != 'active' %}
+            <form action="{% url 'games:close' %}" method="post" class="mt-[10px]">
+                {% csrf_token %}
+                <input type="hidden" name="name" value="{{ game.id }}">
+                <button type="submit" class="bg-red-900 rounded-sm text-[18px] py-[8px] px-[20px] w-full cursor-pointer">Close room</button>
+            </form>
+            {% endif %}
+        </div>
+        {% empty %}
+        <p class="text-[20px] font-semibold mt-[50px] col-span-full">No games yet.</p>
+        {% endfor %}
     </div>
-</div>
+</section>
 {% endblock %}
