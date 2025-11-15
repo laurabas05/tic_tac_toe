@@ -5,6 +5,6 @@ app_name = 'games'
 urlpatterns = [
     path('list/', views.game_list, name='list'),
     path('create/', views.create_game, name='create'),
-    path('detail/', views.game_detail, name='detail'),
+    path('<int:game_id>/', views.game_detail, name='detail'),
     path('close/', views.close_game, name='close')
 ]

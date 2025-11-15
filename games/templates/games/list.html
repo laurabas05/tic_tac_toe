@@ -5,7 +5,7 @@ List of games
 {% endblock %}
 
 {% block content %}
-<section class="mx-[40px] mt-[30px] text-center text-white">
+<section class="mx-[40px] mt-[20px] text-center text-white">
     <h1 class="text-[40px] font-semibold bg-gray-950 text-center py-[10px] rounded-[10px] mb-[20px]">List of games</h1>
     <a class="bg-gray-950 rounded-sm text-[20px] py-[10px] px-[40px]" href="{% url 'games:create' %}">➕ New
         game</a>
@@ -17,11 +17,11 @@ List of games
             <p class="text-[18px] text-gray-300">Creator: {{ game.owner.username }}</p>
             <p class="text-[18px] text-gray-300">State: {{ game.state }}</p>
 
-            <form action="{% url 'games:detail' %}" method="post" class="mt-[15px]">
+            <form action="{% url 'games:detail' game.id %}" method="post" class="mt-[15px]">
                 {% csrf_token %}
                 <input type="hidden" name="name" value="{{ game.id }}">
                 <button type="submit" class="bg-gray-950 rounded-sm text-[20px] py-[10px] px-[20px] w-full cursor-pointer">
-                    {% if request.user == game.owner %}Play{% else %}View{% endif %}
+                    {% if request.user == game.owner %}🎮 Play{% else %}👀 View{% endif %}
                 </button>
             </form>
 

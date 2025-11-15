@@ -30,49 +30,61 @@ def create_game(request):
     return render(request, 'games/create.html')
 
 @login_required
-def game_detail(request):
-    if request.method == 'POST':
-        game = Game.objects.get(id=request.POST.get('name'))
-        user_is_owner = (request.user == game.owner)
-        
-        if not request.POST.get('square'):
-            board = [c for c in game.board]
-            context = {
-                'game': game,
-                'board': board,
-                'user_is_owner': user_is_owner
-            }
-            return render(request, 'games/detail.html', context)
-        
-        if game.state != 'active':
-            return redirect('games:list')
-        
-        try:
-            square = int(request.POST.get('square'))
-        except (TypeError, ValueError):
-            return redirect('games:list')
-        
-        board = list(game.board)
-        if board[square] != '_':
-            return redirect('games:list')
-        
-        token = '❌' if game.active_player == 1 else '⭕'
-        board[square] = token
-        game.board = ''.join(board)
-        
-        result = check_winner(game.board)
-        if result in ('❌', '⭕'):
-            game.state = 'won'
-            game.winner = game.owner if result == '❌' else None
-        elif result == 'Tie':
-            game.state = 'tie'
-        else:
-            game.active_player = 2 if game.active_player == 1 else 1
-            
-        game.save()
-        return render(request, 'games/detail.html', {'game': game, 'board': list(game.board), 'user_is_owner': user_is_owner})
+def game_detail(request, game_id):
 
-    return redirect('games:list')
+    game = Game.objects.get(id=game_id)
+    user_is_owner = (request.user == game.owner)
+
+    # Si es GET, simplemente mostramos el tablero
+    if request.method == 'GET':
+        board = list(game.board)
+        return render(request, 'games/detail.html', {
+            'game': game,
+            'board': board,
+            'user_is_owner': user_is_owner
+        })
+
+    # Si no es el owner, no puede jugar
+    if not user_is_owner:
+        return redirect('games:detail', game_id=game_id)
+
+    # El juego ya acabó
+    if game.state != 'active':
+        return redirect('games:detail', game_id=game_id)
+
+    square = request.POST.get('square')
+
+    try:
+        square = int(square)
+    except ValueError:
+        return redirect('games:detail', game_id=game_id)
+
+    board = list(game.board)
+
+    # Casilla no válida
+    if square < 0 or square > 8 or board[square] != '_':
+        return redirect('games:detail', game_id=game_id)
+
+    # Colocamos ficha
+    token = '❌' if game.active_player == 1 else '⭕'
+    board[square] = token
+    game.board = ''.join(board)
+
+    # Revisamos si hay ganador
+    result = check_winner(game.board)
+
+    if result in ('❌', '⭕'):
+        game.state = 'won'
+        game.winner = game.owner
+    elif result == 'Tie':
+        game.state = 'tie'
+        game.winner = None
+    else:
+        game.active_player = 2 if game.active_player == 1 else 1
+
+    game.save()
+
+    return redirect('games:detail', game_id=game_id)
 
 
 def check_winner(board):

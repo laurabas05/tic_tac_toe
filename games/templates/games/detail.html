@@ -7,60 +7,56 @@
 {% block content %}
 <div class="max-w-[40%] mx-auto bg-gray-800 py-[20px] rounded-[10px] mt-[70px] mb-[70px]">
     <section class="max-w-[90%] mx-auto text-white text-center">
-        <h1 class="text-[40px] font-semibold bg-gray-950 text-center py-[5px] rounded-[10px] mb-[40px]">{{ game.room_name }}</h1>
+        <h1 class="text-[40px] font-semibold bg-gray-950 text-center py-[5px] rounded-[10px] mb-[40px]">
+            {{ game.room_name }}</h1>
         <p class="mb-[30px]">Current player: {{ request.user.username }}</p>
 
         <form method="post" class="flex justify-center">
             {% csrf_token %}
-            <input type="hidden" name="name" value="{{ game.id }}">
             <div class="grid grid-cols-3 gap-[8px]">
                 {% for cell in board %}
-                    {% if cell == '_' %}
-                        {% if user_is_owner and game.state == 'active' %}
-                            <button 
-                                type="submit" 
-                                name="square" 
-                                value="{{ forloop.counter0 }}"
-                                class="h-[80px] w-[80px] bg-gray-900 hover:bg-gray-700 text-[30px] rounded-[8px]"
-                            >
-                            </button>
-                        {% else %}
-                            <div class="h-[80px] w-[80px] border border-gray-600 rounded-[8px]"></div>
-                        {% endif %}
-                    {% else %}
-                        <div class="h-[80px] w-[80px] border border-gray-600 rounded-[8px] flex items-center justify-center text-[35px] font-bold text-gray-200">
-                            {{ cell }}
-                        </div>
-                    {% endif %}
+                {% if cell == '_' %}
+                {% if game.state == 'active' %}
+                <button type="submit" name="square" value="{{ forloop.counter0 }}"
+                    class="h-[80px] w-[80px] bg-gray-900 hover:bg-gray-700 text-[30px] rounded-[8px]">
+                </button>
+                {% else %}
+                <div class="h-[80px] w-[80px] border border-gray-600 rounded-[8px]"></div>
+                {% endif %}
+                {% else %}
+                <div
+                    class="h-[80px] w-[80px] border border-gray-600 rounded-[8px] flex items-center justify-center text-[35px] font-bold text-gray-200">
+                    {{ cell }}
+                </div>
+                {% endif %}
                 {% endfor %}
             </div>
         </form>
 
         <!-- Resultado de la partida -->
         {% if game.state != 'active' %}
-            <div class="mt-[30px]">
-                {% if game.state == 'won' %}
-                    <p class="text-[22px] font-semibold text-green-400">
-                        🏆 Winner: {{ game.winner.username|default:"Jugador O" }}
-                    </p>
-                {% else %}
-                    <p class="text-[22px] font-semibold text-yellow-400">🤝 Tie</p>
-                {% endif %}
-            </div>
-
-            <!-- Botón de cerrar sala -->
-            {% if user_is_owner %}
-            <form action="{% url 'games:close' %}" method="post" class="mt-[20px]">
-                {% csrf_token %}
-                <input type="hidden" name="name" value="{{ game.id }}">
-                <button 
-                    type="submit" 
-                    class="bg-red-900 text-[20px] py-[10px] px-[40px] rounded-[8px] cursor-pointer">
-                    Close room
-                </button>
-            </form>
+        <div class="mt-[30px]">
+            {% if game.state == 'won' %}
+            <p class="text-[22px] font-semibold text-green-400">
+                🏆 Winner: {{ game.winner.username|default:"Jugador O" }}
+            </p>
+            {% else %}
+            <p class="text-[22px] font-semibold text-yellow-400">🤝 Tie</p>
             {% endif %}
+        </div>
+
+        <!-- Botón de cerrar sala -->
+        {% if user_is_owner %}
+        <form action="{% url 'games:close' %}" method="post" class="mt-[20px]">
+            {% csrf_token %}
+            <input type="hidden" name="name" value="{{ game.id }}">
+            <button type="submit" class="bg-red-900 text-[20px] py-[10px] px-[40px] rounded-[8px] cursor-pointer">
+                Close room
+            </button>
+        </form>
+        {% endif %}
         {% endif %}
     </section>
 </div>
+
 {% endblock %}

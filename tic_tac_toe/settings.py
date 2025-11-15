@@ -33,6 +33,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,8 +45,15 @@ INSTALLED_APPS = [
     'theme',
     'django_browser_reload',
     'games',
-    'users'
+    'users',
 ]
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": { "hosts": [("127.0.0.1", 6379)], },
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -77,6 +86,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'tic_tac_toe.wsgi.application'
 
+ASGI_APPLICATION = 'tic_tac_toe.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
