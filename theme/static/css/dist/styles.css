@@ -7,7 +7,6 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
-    --color-red-700: oklch(50.5% 0.213 27.518);
     --color-red-900: oklch(39.6% 0.141 25.723);
     --color-yellow-400: oklch(85.2% 0.199 91.936);
     --color-green-400: oklch(79.2% 0.209 151.711);
@@ -196,6 +195,34 @@
   .col-span-full {
     grid-column: 1 / -1;
   }
+  .container {
+    width: 100%;
+  }
+  @media (width >= 40rem) {
+    .container {
+      max-width: 40rem;
+    }
+  }
+  @media (width >= 48rem) {
+    .container {
+      max-width: 48rem;
+    }
+  }
+  @media (width >= 64rem) {
+    .container {
+      max-width: 64rem;
+    }
+  }
+  @media (width >= 80rem) {
+    .container {
+      max-width: 80rem;
+    }
+  }
+  @media (width >= 96rem) {
+    .container {
+      max-width: 96rem;
+    }
+  }
   .mx-\[40px\] {
     margin-inline: 40px;
   }
@@ -268,6 +295,9 @@
   .h-\[80px\] {
     height: 80px;
   }
+  .h-\[260px\] {
+    height: 260px;
+  }
   .min-h-screen {
     min-height: 100vh;
   }
@@ -276,6 +306,9 @@
   }
   .w-\[80px\] {
     width: 80px;
+  }
+  .w-\[260px\] {
+    width: 260px;
   }
   .w-full {
     width: 100%;
@@ -309,6 +342,9 @@
   }
   .flex-col {
     flex-direction: column;
+  }
+  .place-items-center {
+    place-items: center;
   }
   .items-center {
     align-items: center;
@@ -349,9 +385,6 @@
   }
   .bg-gray-950 {
     background-color: var(--color-gray-950);
-  }
-  .bg-red-700 {
-    background-color: var(--color-red-700);
   }
   .bg-red-900 {
     background-color: var(--color-red-900);
@@ -468,16 +501,6 @@
   @media (hover: hover) {
     .hover\:bg-gray-700:hover {
       background-color: var(--color-gray-700);
-    }
-  }
-  @media (hover: hover) {
-    .hover\:bg-red-700:hover {
-      background-color: var(--color-red-700);
-    }
-  }
-  @media (hover: hover) {
-    .hover\:bg-red-900:hover {
-      background-color: var(--color-red-900);
     }
   }
   .focus\:outline-none:focus {

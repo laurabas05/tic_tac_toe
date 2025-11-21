@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 import os
 from pathlib import Path
+from django.forms.renderers import TemplatesSetting
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -71,7 +72,7 @@ ROOT_URLCONF = 'tic_tac_toe.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -80,7 +81,6 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
         },
-        'DIRS': ['templates'],
     },
 ]
 
@@ -145,3 +145,12 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 TAILWIND_APP_NAME = 'theme'
+
+# FORM SNIPPET
+class MyDefaultFormRenderer(TemplatesSetting):
+    form_template_name = "default_form_snippet.html"
+    
+FORM_RENDERER = "tic_tac_toe.settings.MyDefaultFormRenderer"
+    
+    # si quieres personalizar campos:
+    # email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={"placeholder": "tu@correo.com"}))

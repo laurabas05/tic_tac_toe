@@ -12,16 +12,7 @@ Log in
         <form action="{% url 'users:login' %}" method='post'>
             {% csrf_token %}
 
-            {% for field in form %}
-            <div>
-                <label class="block mb-[5px] mt-[25px] text-white font-[25px]">{{ field.label }}</label>
-                {{ field }}
-            </div>
-            {% endfor %}
-
-            {% if request.GET.next %}
-            <input type='hidden' name='next' value='{{ request.GET.next }}'>
-            {% endif %}
+            {% include "users/default_form_snippet.html" %}
 
             <button type="submit"
                 class="w-full bg-gray-950 text-white rounded-[8px] py-[10px] mt-[20px] cursor-pointer">Log

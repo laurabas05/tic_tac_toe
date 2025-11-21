@@ -11,12 +11,7 @@ Sign up
         <form action="{% url 'users:register' %}" method='post'>
             {% csrf_token %}
             
-            {% for field in form %}
-            <div>
-                <label class="block mb-[5px] mt-[25px] text-white font-[25px]">{{ field.label }}</label>
-                {{ field }}
-            </div>
-            {% endfor %}
+            {% include "users/default_form_snippet.html" %}
 
             <button type=”submit”
                 class="w-full bg-gray-950 text-white rounded-[8px] py-[10px] mt-[20px] cursor-pointer">Create account</button>

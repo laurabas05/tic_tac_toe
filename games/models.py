@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 class Game(models.Model):
     room_name = models.CharField(max_length=50, unique = True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owned_games')
+    player2 = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='joined_games')
     board = models.CharField(max_length=9, default='_'*9)
     active_player = models.IntegerField(default=1)
     STATE_CHOICES = [

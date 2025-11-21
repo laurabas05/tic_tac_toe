@@ -1,0 +1,18 @@
+{{ form.non_field_errors }}
+<div class="mb-[10px] w-64 p-2 rounded-[8px] bg-gray-900 text-white focus:outline-none">
+    {{ form.username.errors }}
+    <label for="{{ form.username.id_for_label }}">Username:</label>
+    {{ form.username }}
+</div>
+
+<div class="mb-[10px] w-64 p-2 rounded-[8px] bg-gray-900 text-white focus:outline-none">
+    {{ form.password1.errors }}
+    <label for="{{ form.password1.id_for_label }}">Password:</label>
+    {{ form.password1 }}
+</div>
+
+<div class="mb-[10px] w-64 p-2 rounded-[8px] bg-gray-900 text-white focus:outline-none">
+    {{ form.password2.errors }}
+    <label for="{{ form.password2.id_for_label }}">Confirm password:</label>
+    {{ form.password2 }}
+</div>
