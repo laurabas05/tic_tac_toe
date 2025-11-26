@@ -23,5 +23,6 @@ urlpatterns = [
     path("__reload__/", include("django_browser_reload.urls")),
     path('', views.homepage, name='homepage'),
     path('games/', include('games.urls', namespace='games')),
-    path('users/', include('users.urls', namespace='users'))
+    path('users/', include('users.urls', namespace='users')),
+    path('api/', include('api.urls')),
 ]

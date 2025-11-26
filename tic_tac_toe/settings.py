@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 import os
 from pathlib import Path
-from django.forms.renderers import TemplatesSetting
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -34,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
     'channels',
     'daphne',
     'django.contrib.admin',
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django_browser_reload',
     'games',
     'users',
+    'api',
 ]
 
 CHANNEL_LAYERS = {
@@ -72,7 +73,7 @@ ROOT_URLCONF = 'tic_tac_toe.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [ BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -145,12 +146,3 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 TAILWIND_APP_NAME = 'theme'
-
-# FORM SNIPPET
-class MyDefaultFormRenderer(TemplatesSetting):
-    form_template_name = "default_form_snippet.html"
-    
-FORM_RENDERER = "tic_tac_toe.settings.MyDefaultFormRenderer"
-    
-    # si quieres personalizar campos:
-    # email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={"placeholder": "tu@correo.com"}))
