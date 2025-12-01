@@ -25,4 +25,5 @@ urlpatterns = [
     path('games/', include('games.urls', namespace='games')),
     path('users/', include('users.urls', namespace='users')),
     path('api/', include('api.urls')),
+    path('random_jokes/', include('random_jokes_api.urls'))
 ]

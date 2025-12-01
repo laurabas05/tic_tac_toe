@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'games',
     'users',
     'api',
+    'random_jokes_api',
 ]
 
 CHANNEL_LAYERS = {
